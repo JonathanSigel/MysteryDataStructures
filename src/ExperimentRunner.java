@@ -6,9 +6,12 @@ import com.cs210x.*;
   */
 public class ExperimentRunner {
 	private static final int NUM_DATA_STRUCTURES_TO_DEDUCE = 5;
-	private static final Random random = new Random(); //!!!is it fine that I just put this as a member variable so I don't have to constantly instantiate it?
+	private static final Random random = new Random(); //!!![yux: I think it's a good idea] is it fine that I just put this as a member variable so I don't have to constantly instantiate it?
 	private static final String CS_210X_TEAM_ID_FOR_PROJECT_4 = "ksegenchuk";
 
+	// YUX'S COMMENTS ON WHAT WE SHOULD DO
+	// WE SHOULD RUN THIS THROUGH MULTIPLE TIMES AND CREATE A AVERAGE FUNCTION TO MAKE THE MOST ACCURATE ANSWER
+	// WE SHOULD AVOID NUMBERS AND TRY OTHER THINGS SUCH AS STRINGS,
 	public static void main (String[] args) {
 		System.out.println("---ADD---");
 		for (int i = 0; i < NUM_DATA_STRUCTURES_TO_DEDUCE; i++) {
