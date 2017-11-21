@@ -6,41 +6,58 @@ import com.cs210x.*;
   */
 public class ExperimentRunner {
 	private static final int NUM_DATA_STRUCTURES_TO_DEDUCE = 5;
+	private static final Random random = new Random(); //!!!is it fine that I just put this as a member variable so I don't have to constantly instantiate it?
+	private static final String CS_210X_TEAM_ID_FOR_PROJECT_4 = "ksegenchuk";
 
 	public static void main (String[] args) {
-		final String cs210XTeamIDForProject4 = "YOUR_LOGIN_ID"; // TODO CHANGE THIS TO THE TEAM ID YOU USE TO SUBMIT YOUR PROJECT3 ON INSTRUCT-ASSIST.
-
-		// Fetch the collections whose type you must deduce.
-		// Note -- you are free to change the type parameter from Integer to whatever you want. In this
-		// case, make sure to replace (over the next 4 lines of code) Integer with whatever class you prefer.
-		// In addition, you'll need to pass the method getMysteryDataStructure a "sample" (an instance) of 
-		// the class you want the collection to store.
-		@SuppressWarnings("unchecked")
-		final Collection210X<Integer>[] mysteryDataStructures = (Collection210X<Integer>[]) new Collection210X[NUM_DATA_STRUCTURES_TO_DEDUCE];
+		System.out.println("---ADD---");
 		for (int i = 0; i < NUM_DATA_STRUCTURES_TO_DEDUCE; i++) {
-			mysteryDataStructures[i] = MysteryDataStructure.getMysteryDataStructure(cs210XTeamIDForProject4.hashCode(), i, new Integer(0));
+			System.out.println("Data Structure " + i + " : " + testAdd(i, 1000));
 		}
+	}
 
-		// Write your code here...
-		final Random random = new Random();  // instantiate a random number generator
-		final int N = 100;
-		for (int i = 0; i < N; i++) {  // populate the mystery data structure with 100 numbers
-			mysteryDataStructures[0].add(new Integer(i));
-		}
-		final int elementToFind = random.nextInt(N);
+	public static long testAdd(int dataStructureIndex, int n) {
+		Collection210X dataStructure = fill(dataStructureIndex, n);
+		Integer toAdd = random.nextInt(n);
 
-		// This is an example of measuring an operation's time cost *without* averaging -- the times will vary wildly!		
-		// You really should average...
 		final long start = CPUClock.getNumTicks();
-		// Time how long it takes to find a single, randomly chosen item stored in the mystery data structure
-		final boolean result = mysteryDataStructures[0].contains(elementToFind);
+		dataStructure.add(toAdd);
 		final long end = CPUClock.getNumTicks();
-		final long elapsed = end - start;
 
-		// Write a table of numbers (for different N -- here, we are just showing one value for simplicity) showing
-		// the relationship between N and the time-cost associated with searching (with the contains method) through
-		// a collection of N data.
-		System.out.println("N\tT (contains(o))");
-		System.out.println(N + "\t" + elapsed);
+		return end - start;
+	}
+
+	public static long testRemove(int dataStructureIndex, int n) {
+		Collection210X dataStructure = fill(dataStructureIndex, n);
+		//!!! should I make sure that what I'm removing is in the data structure?
+		Integer toRemove = random.nextInt(n);
+
+		final long start = CPUClock.getNumTicks();
+		dataStructure.remove(toRemove);
+		final long end = CPUClock.getNumTicks();
+
+		return end - start;
+	}
+
+	public static long testContains(int dataStructureIndex, int n) {
+		Collection210X dataStructure = fill(dataStructureIndex, n);
+		//!!! should I make sure that what I'm checking for is in the data structure?
+		Integer toLook = random.nextInt(n);
+
+		final long start = CPUClock.getNumTicks();
+		dataStructure.contains(toLook);
+		final long end = CPUClock.getNumTicks();
+
+		return end - start;
+	}
+
+	public static Collection210X fill(int dataStructureIndex, int n) {
+		Collection210X dataStructure = MysteryDataStructure.getMysteryDataStructure(CS_210X_TEAM_ID_FOR_PROJECT_4.hashCode(), dataStructureIndex, new Integer(0));
+
+		for (int i = 1; i < n; i++) { //starts at 1 because data structure was initialized with a value
+			dataStructure.add(random.nextInt(n));
+		}
+
+		return dataStructure;
 	}
 }
