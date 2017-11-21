@@ -10,9 +10,9 @@ public class ExperimentRunner {
 	private static final String CS_210X_TEAM_ID_FOR_PROJECT_4 = "ksegenchuk";
 
 	public static void main (String[] args) {
-		System.out.println("---ADD---");
+		System.out.println("---REMOVE---");
 		for (int i = 0; i < NUM_DATA_STRUCTURES_TO_DEDUCE; i++) {
-			System.out.println("Data Structure " + i + " : " + testAdd(i, 1000));
+			System.out.println("Data Structure " + i + " : " + testRemove(i, 1000));
 		}
 	}
 
