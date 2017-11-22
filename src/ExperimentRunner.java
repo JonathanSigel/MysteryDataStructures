@@ -1,63 +1,33 @@
+import java.lang.reflect.Method;
 import java.util.*;
 import com.cs210x.*;
 
 /**
-  * Class to deduce the identity of mystery data structures.
-  */
+ * Class to deduce the identity of mystery data structures.
+ */
 public class ExperimentRunner {
-	private static final int NUM_DATA_STRUCTURES_TO_DEDUCE = 5;
-	private static final Random random = new Random(); //!!!is it fine that I just put this as a member variable so I don't have to constantly instantiate it?
-	private static final String CS_210X_TEAM_ID_FOR_PROJECT_4 = "ksegenchuk";
+    private static final int NUM_DATA_STRUCTURES_TO_DEDUCE = 5;
+    private static final String CS_210X_TEAM_ID_FOR_PROJECT_4 = "ksegenchuk";
+    private static int[] N_VALUES = {1, 2, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90,
+            100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000,
+            6000, 7000, 8000, 9000, 10000}; //size values for testing
+    private static int NUM_OF_TESTS = 30;
+    public static void main (String[] args) {
+        final Collection210XTester[] tests = new Collection210XTester[4];
+        tests[0] = new AddTester(CS_210X_TEAM_ID_FOR_PROJECT_4);
+        tests[1] = new RemoveTester(CS_210X_TEAM_ID_FOR_PROJECT_4);
+        tests[2] = new ContainsTester(CS_210X_TEAM_ID_FOR_PROJECT_4);
+        tests[3] = new ContainsMaxTester(CS_210X_TEAM_ID_FOR_PROJECT_4);
 
-	public static void main (String[] args) {
-		System.out.println("---ADD---");
-		for (int i = 0; i < NUM_DATA_STRUCTURES_TO_DEDUCE; i++) {
-			System.out.println("Data Structure " + i + " : " + testAdd(i, 1000));
-		}
-	}
+        for (int i = 0; i < tests.length; i++) {
+            System.out.println("-------" + tests[i].getType() + "-------");
+            for (int j = 0; j < NUM_DATA_STRUCTURES_TO_DEDUCE; j++) {
+                System.out.println("Data Structure : " + j + " -------*");
+                for (int k = 0; k < N_VALUES.length; k++) {
+                    System.out.println("time for length " + N_VALUES[k] + " : " + tests[i].runTest(j, N_VALUES[k], NUM_OF_TESTS));
+                }
+            }
+        }
 
-	public static long testAdd(int dataStructureIndex, int n) {
-		Collection210X dataStructure = fill(dataStructureIndex, n);
-		Integer toAdd = random.nextInt(n);
-
-		final long start = CPUClock.getNumTicks();
-		dataStructure.add(toAdd);
-		final long end = CPUClock.getNumTicks();
-
-		return end - start;
-	}
-
-	public static long testRemove(int dataStructureIndex, int n) {
-		Collection210X dataStructure = fill(dataStructureIndex, n);
-		//!!! should I make sure that what I'm removing is in the data structure?
-		Integer toRemove = random.nextInt(n);
-
-		final long start = CPUClock.getNumTicks();
-		dataStructure.remove(toRemove);
-		final long end = CPUClock.getNumTicks();
-
-		return end - start;
-	}
-
-	public static long testContains(int dataStructureIndex, int n) {
-		Collection210X dataStructure = fill(dataStructureIndex, n);
-		//!!! should I make sure that what I'm checking for is in the data structure?
-		Integer toLook = random.nextInt(n);
-
-		final long start = CPUClock.getNumTicks();
-		dataStructure.contains(toLook);
-		final long end = CPUClock.getNumTicks();
-
-		return end - start;
-	}
-
-	public static Collection210X fill(int dataStructureIndex, int n) {
-		Collection210X dataStructure = MysteryDataStructure.getMysteryDataStructure(CS_210X_TEAM_ID_FOR_PROJECT_4.hashCode(), dataStructureIndex, new Integer(0));
-
-		for (int i = 1; i < n; i++) { //starts at 1 because data structure was initialized with a value
-			dataStructure.add(random.nextInt(n));
-		}
-
-		return dataStructure;
-	}
+    }
 }
