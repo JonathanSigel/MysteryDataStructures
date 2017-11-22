@@ -13,7 +13,7 @@ public class ContainsMaxTester extends Collection210XTesterImpl {
     protected long timeTest(Collection210X dataStructure, int n)
     {
         final long start = CPUClock.getNumTicks();
-        dataStructure.contains(n-1);
+        dataStructure.contains(2 * n);
         final long end = CPUClock.getNumTicks();
 
         return end - start;

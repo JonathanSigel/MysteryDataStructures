@@ -12,8 +12,12 @@ public class ContainsTester extends Collection210XTesterImpl {
     @Override
     protected long timeTest(Collection210X dataStructure, int n)
     {
-        Random random = new Random();
-        Integer item = random.nextInt(n);
+        Random random = new Random(CPUClock.getNumTicks());
+        Integer item = random.nextInt(2 * n);
+
+        if (item % 2 != 0) {
+            item = item ++;
+        }
 
         final long start = CPUClock.getNumTicks();
         dataStructure.contains(item);
