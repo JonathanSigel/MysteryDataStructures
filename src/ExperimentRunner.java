@@ -14,23 +14,19 @@ public class ExperimentRunner {
             6000, 7000, 8000, 9000, 10000}; //size values for testing
     private static int NUM_OF_TESTS = 50;
     public static void main (String[] args) {
+
+        // Fills an array with testers so that the tests can easily be ran through.
+        // Tests are divided into classes to factor out commonality and eliminate the need of having to pass a method as a parameter
         final Collection210XTester[] tests = new Collection210XTester[4];
         tests[0] = new AddTester(CS_210X_TEAM_ID_FOR_PROJECT_4);
         tests[1] = new RemoveTester(CS_210X_TEAM_ID_FOR_PROJECT_4);
         tests[2] = new ContainsTester(CS_210X_TEAM_ID_FOR_PROJECT_4);
         tests[3] = new ContainsMaxTester(CS_210X_TEAM_ID_FOR_PROJECT_4);
 
-       /* for (int i = 0; i < tests.length; i++) {
-            System.out.println("-------" + tests[i].getType() + "-------");
-            for (int j = 0; j < NUM_DATA_STRUCTURES_TO_DEDUCE; j++) {
-                System.out.println("Data Structure : " + j + " -------*");
-                for (int k = 0; k < N_VALUES.length; k++) {
-                    System.out.println(//"time for length " + N_VALUES[k] + " : " +
-                            tests[i].runTest(j, N_VALUES[k], NUM_OF_TESTS));
-                }
-            }
-        }*/
-
+        // Runs through testers, sizes for n, and the data structures,
+        // putting the time it takes for each operation on a data structure of given size
+        // in a csv file which can be easily converted to an excel file for making graphs.
+        // Also outprints to the console in case you would rather view the data there.
        try {
            PrintWriter testResultsFile = new PrintWriter("testResults.csv", "UTF-8");
 
@@ -50,7 +46,9 @@ public class ExperimentRunner {
            }
            testResultsFile.close();
 
-       }catch (Exception E){}
+       }catch (Exception E){
+           System.out.println(E.getMessage());
+       }
 
     }
 }
